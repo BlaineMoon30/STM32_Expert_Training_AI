@@ -76,6 +76,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 }
 
 uint8_t rx_acc_xyz[6] = {0,};
+uint8_t similarity = 0;
+
+#define LEARNING_ITERATIONS 10
+float input_user_buffer[DATA_INPUT_USER * AXIS_NUMBER]; // Buffer of input values
 
 #if 0
 /* Includes --------------------------------------------------------------------*/
@@ -180,15 +184,33 @@ int main(void)
 
   ism330dhcx_init();
 
-  rx_acc_xyz[4] = neai_anomalydetection_init();
+  enum neai_state error_code = neai_anomalydetection_init();
+  uint8_t similarity = 0;
+
+  /* Learning process ----------------------------------------------------------*/
+  for (uint16_t iteration = 0 ; iteration < LEARNING_ITERATIONS ; iteration++) {
+
+	for(int i = 0; i < DATA_INPUT_USER; i++)
+	{
+	  ism330dhck_read_acc(&input_user_buffer[i*AXIS_NUMBER]);
+	  HAL_Delay(20);
+	}
+	neai_anomalydetection_learn(input_user_buffer);
+  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    ism330dhck_read_acc(rx_acc_xyz);
-    HAL_Delay(200);
+  	for(int i = 0; i < DATA_INPUT_USER; i++)
+  	{
+  	  ism330dhck_read_acc(&input_user_buffer[i*AXIS_NUMBER]);
+  	  HAL_Delay(20);
+  	}
+  	neai_anomalydetection_detect(input_user_buffer, &similarity);
+  	printf("similarity = %d\r\n",similarity);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

@@ -12,6 +12,6 @@
 #include "main.h"
 
 extern void ism330dhcx_init(void);
-extern void ism330dhck_read_acc(uint8_t* rx_data);
+extern void ism330dhck_read_acc(float* rx_data);
 
 #endif /* INC_ISM330DHCX_SENSOR_H_ */

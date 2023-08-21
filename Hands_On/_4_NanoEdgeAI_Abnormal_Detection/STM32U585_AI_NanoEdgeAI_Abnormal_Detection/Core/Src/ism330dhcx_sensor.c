@@ -31,23 +31,13 @@ void ism330dhcx_init(void)
   ism330dhck_write_reg(ISM330DHCX_CTRL1_XL, set_reg_value, 1);
   ism330dhck_read_reg(ISM330DHCX_CTRL1_XL, &get_reg_value, 1);
 
-  ism330dhck_read_acc(rx_buf);
-
-  int16_t x,y,z;
-
-  x = (int16_t)(((uint16_t)rx_buf[1]<<8)|(uint16_t)rx_buf[0]);
-  y = (int16_t)(((uint16_t)rx_buf[3]<<8)|(uint16_t)rx_buf[2]);
-  z = (int16_t)(((uint16_t)rx_buf[5]<<8)|(uint16_t)rx_buf[4]);
-
-  printf("X Acceleration: %.3f %.3f %.3f \n", (float)x, (float)y, (float)z);
-
   printf("ism330dhcx_sensor init done\r\n");
 }
 
 void ism330dhck_read_reg(uint8_t reg, uint8_t *rx_data, uint16_t size)
 {
   uint8_t read_reg = reg;
-  if ((HAL_I2C_Master_Transmit(&hi2c2, ISM330DHCX_I2C_ADD_H, &read_reg, size, 0xffff)) != HAL_OK)
+  if ((HAL_I2C_Master_Transmit(&hi2c2, ISM330DHCX_I2C_ADD_H, &read_reg, 1, 0xffff)) != HAL_OK)
   {
 
   }
@@ -69,27 +59,62 @@ void ism330dhck_write_reg(uint8_t reg, uint8_t tx_data, uint16_t size)
   }
 }
 
-void ism330dhck_read_acc(uint8_t* rx_data)
+void ism330dhck_read_acc(float* rx_data)
 {
-  for(int i = 0; i < 6; i++)
+  uint8_t xyz_data[6];
+
+  //for(int i = 0; i < 6; i++)
   {
-    ism330dhck_read_reg(ISM330DHCX_OUTX_L_A+i, &rx_data[i], 1);
+    ism330dhck_read_reg(ISM330DHCX_OUTX_L_A, &xyz_data[0], 6);
   }
 
-  int16_t x,y,z;
+#if 0
+  rx_data[0] = (((int16_t)xyz_data[1]<<8)|xyz_data[0]);
+  rx_data[1] = (((int16_t)xyz_data[3]<<8)|xyz_data[2]);
+  rx_data[2] = (((int16_t)xyz_data[5]<<8)|xyz_data[4]);
+#else
+  /*
+  rx_data[0] = (int16_t)(xyz_data[1]<<8)|xyz_data[0];
+  rx_data[1] = (int16_t)(xyz_data[3]<<8)|xyz_data[2];
+  rx_data[2] = (int16_t)(xyz_data[5]<<8)|xyz_data[4];
+  */
 
-  x = (int16_t)(((uint16_t)rx_data[1]<<8)|(uint16_t)rx_data[0]);
-  y = (int16_t)(((uint16_t)rx_data[3]<<8)|(uint16_t)rx_data[2]);
-  z = (int16_t)(((uint16_t)rx_data[5]<<8)|(uint16_t)rx_data[4]);
+  rx_data[0] = (int16_t)xyz_data[1];
+  rx_data[0] = (rx_data[0] * 256) + (int16_t)xyz_data[0];
+  rx_data[1] = (int16_t)xyz_data[3];
+  rx_data[1] = (rx_data[1] * 256) + (int16_t)xyz_data[2];
+  rx_data[2] = (int16_t)xyz_data[5];
+  rx_data[2] = (rx_data[2] * 256) + (int16_t)xyz_data[4];
+#endif
 
-  printf("X Acceleration: %.3f %.3f %.3f \n", (float)x, (float)y, (float)z);
+  //printf("X Acceleration: %.3f %.3f %.3f \n", rx_data[0], rx_data[1], rx_data[0]);
+
+  printf("X Acceleration: %.3d %.3d %.3d \n", (int16_t)(xyz_data[1]<<8)|xyz_data[0], (int16_t)(xyz_data[3]<<8)|xyz_data[2], (int16_t)(xyz_data[5]<<8)|xyz_data[4]);
 }
 
-/*
-#define ISM330DHCX_OUTX_L_A                     0x28U
-#define ISM330DHCX_OUTX_H_A                     0x29U
-#define ISM330DHCX_OUTY_L_A                     0x2AU
-#define ISM330DHCX_OUTY_H_A                     0x2BU
-#define ISM330DHCX_OUTZ_L_A                     0x2CU
-#define ISM330DHCX_OUTZ_H_A                     0x2DU
-*/
+#if 0
+/**
+  * @brief  Linear acceleration output register. The value is expressed as a
+  *         16-bit word in two's complement.[get]
+  *
+  * @param  ctx    Read / write interface definitions.(ptr)
+  * @param  buff   Buffer that stores data read
+  * @retval        Interface status (MANDATORY: return 0 -> no Error).
+  *
+  */
+int32_t ism330dhcx_acceleration_raw_get(stmdev_ctx_t *ctx,
+                                        int16_t *val)
+{
+  uint8_t buff[6];
+  int32_t ret;
+  ret = ism330dhcx_read_reg(ctx, ISM330DHCX_OUTX_L_A, buff, 6);
+  val[0] = (int16_t)buff[1];
+  val[0] = (val[0] * 256) + (int16_t)buff[0];
+  val[1] = (int16_t)buff[3];
+  val[1] = (val[1] * 256) + (int16_t)buff[2];
+  val[2] = (int16_t)buff[5];
+  val[2] = (val[2] * 256) + (int16_t)buff[4];
+
+  return ret;
+}
+#endif
