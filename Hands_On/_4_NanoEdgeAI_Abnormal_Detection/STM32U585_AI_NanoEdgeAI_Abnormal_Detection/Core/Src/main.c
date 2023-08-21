@@ -76,6 +76,67 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 }
 
 uint8_t rx_acc_xyz[6] = {0,};
+
+#if 0
+/* Includes --------------------------------------------------------------------*/
+#include "NanoEdgeAI.h"
+/* Number of samples for learning: set by user ---------------------------------*/
+#define LEARNING_ITERATIONS 10
+float input_user_buffer[DATA_INPUT_USER * AXIS_NUMBER]; // Buffer of input values
+
+/* Private function prototypes defined by user ---------------------------------*/
+/*
+ * @brief Collect data process
+ *
+ * This function is defined by user, depends on applications and sensors
+ *
+ * @param sample_buffer: [in, out] buffer of sample values
+ * @retval None
+ * @note   If AXIS_NUMBER = 3 (cf NanoEdgeAI.h), the buffer must be
+ *         ordered as follow:
+ *         [x0 y0 z0 x1 y1 z1 ... xn yn zn], where xi, yi and zi
+ *         are the values for x, y and z axes, n is equal to
+ *         DATA_INPUT_USER (cf NanoEdgeAI.h)
+ */
+void fill_buffer(float input_buffer[])
+{
+        /* USER BEGIN */
+        /* USER END */
+}
+
+/* -----------------------------------------------------------------------------*/
+int main(void)
+{
+        /* Initialization ------------------------------------------------------------*/
+        enum neai_state error_code = neai_anomalydetection_init();
+        uint8_t similarity = 0;
+
+        if (error_code != NEAI_OK) {
+                /* This happens if the library works into a not supported board. */
+        }
+
+        /* Learning process ----------------------------------------------------------*/
+        for (uint16_t iteration = 0 ; iteration < LEARNING_ITERATIONS ; iteration++) {
+                fill_buffer(input_user_buffer);
+                neai_anomalydetection_learn(input_user_buffer);
+        }
+
+        /* Detection process ---------------------------------------------------------*/
+        while (1) {
+                fill_buffer(input_user_buffer);
+                neai_anomalydetection_detect(input_user_buffer, &similarity);
+                /* USER BEGIN */
+    /*
+    * e.g.: Trigger functions depending on similarity
+    * (blink LED, ring alarm, etc.).
+    */
+                /* USER END */
+        }
+}
+
+#endif
+
+
 /* USER CODE END 0 */
 
 /**
