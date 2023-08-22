@@ -67,79 +67,9 @@ static void MX_TIM1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-  if (htim->Instance == TIM1)
-  {
-    HAL_GPIO_TogglePin(GPIOF, GPIO_PIN_13);
-  }
-}
-
-uint8_t rx_acc_xyz[6] = {0,};
 uint8_t similarity = 0;
-
 #define LEARNING_ITERATIONS 10
 float input_user_buffer[DATA_INPUT_USER * AXIS_NUMBER]; // Buffer of input values
-
-#if 0
-/* Includes --------------------------------------------------------------------*/
-#include "NanoEdgeAI.h"
-/* Number of samples for learning: set by user ---------------------------------*/
-#define LEARNING_ITERATIONS 10
-float input_user_buffer[DATA_INPUT_USER * AXIS_NUMBER]; // Buffer of input values
-
-/* Private function prototypes defined by user ---------------------------------*/
-/*
- * @brief Collect data process
- *
- * This function is defined by user, depends on applications and sensors
- *
- * @param sample_buffer: [in, out] buffer of sample values
- * @retval None
- * @note   If AXIS_NUMBER = 3 (cf NanoEdgeAI.h), the buffer must be
- *         ordered as follow:
- *         [x0 y0 z0 x1 y1 z1 ... xn yn zn], where xi, yi and zi
- *         are the values for x, y and z axes, n is equal to
- *         DATA_INPUT_USER (cf NanoEdgeAI.h)
- */
-void fill_buffer(float input_buffer[])
-{
-        /* USER BEGIN */
-        /* USER END */
-}
-
-/* -----------------------------------------------------------------------------*/
-int main(void)
-{
-        /* Initialization ------------------------------------------------------------*/
-        enum neai_state error_code = neai_anomalydetection_init();
-        uint8_t similarity = 0;
-
-        if (error_code != NEAI_OK) {
-                /* This happens if the library works into a not supported board. */
-        }
-
-        /* Learning process ----------------------------------------------------------*/
-        for (uint16_t iteration = 0 ; iteration < LEARNING_ITERATIONS ; iteration++) {
-                fill_buffer(input_user_buffer);
-                neai_anomalydetection_learn(input_user_buffer);
-        }
-
-        /* Detection process ---------------------------------------------------------*/
-        while (1) {
-                fill_buffer(input_user_buffer);
-                neai_anomalydetection_detect(input_user_buffer, &similarity);
-                /* USER BEGIN */
-    /*
-    * e.g.: Trigger functions depending on similarity
-    * (blink LED, ring alarm, etc.).
-    */
-                /* USER END */
-        }
-}
-
-#endif
-
 
 /* USER CODE END 0 */
 
@@ -180,36 +110,43 @@ int main(void)
   MX_USART1_UART_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_Base_Start_IT(&htim1);
 
+  printf("\r\n\r\n=============================================== \r\n");
   ism330dhcx_init();
 
-  enum neai_state error_code = neai_anomalydetection_init();
-  uint8_t similarity = 0;
+  printf("Acceleration abnormal detection NEAI Model Init \r\n");
+  if(neai_anomalydetection_init() != NEAI_OK)
+  {
+    Error_Handler();
+  }
 
   /* Learning process ----------------------------------------------------------*/
-  for (uint16_t iteration = 0 ; iteration < LEARNING_ITERATIONS ; iteration++) {
+  printf("NEAI Model Learning Process.. \r\n");
 
-	for(int i = 0; i < DATA_INPUT_USER; i++)
-	{
-	  ism330dhck_read_acc(&input_user_buffer[i*AXIS_NUMBER]);
-	  HAL_Delay(20);
-	}
-	neai_anomalydetection_learn(input_user_buffer);
+  for (uint16_t iteration = 0 ; iteration < LEARNING_ITERATIONS ; iteration++)
+  {
+    for(int i = 0; i < DATA_INPUT_USER; i++)
+    {
+      ism330dhck_read_acc(&input_user_buffer[i*AXIS_NUMBER]);
+      HAL_Delay(20);
+    }
+    neai_anomalydetection_learn(input_user_buffer);
   }
+
+  printf("NEAI Model Inference start.. \r\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-  	for(int i = 0; i < DATA_INPUT_USER; i++)
-  	{
-  	  ism330dhck_read_acc(&input_user_buffer[i*AXIS_NUMBER]);
-  	  HAL_Delay(20);
-  	}
-  	neai_anomalydetection_detect(input_user_buffer, &similarity);
-  	printf("similarity = %d\r\n",similarity);
+    for(int i = 0; i < DATA_INPUT_USER; i++)
+    {
+      ism330dhck_read_acc(&input_user_buffer[i*AXIS_NUMBER]);
+      HAL_Delay(20);
+    }
+    neai_anomalydetection_detect(input_user_buffer, &similarity);
+    printf("similarity = %d\r\n",similarity);
 
     /* USER CODE END WHILE */
 
@@ -229,7 +166,7 @@ void SystemClock_Config(void)
 
   /** Configure the main internal regulator output voltage
   */
-  if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE2) != HAL_OK)
+  if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -244,10 +181,10 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_MSI;
   RCC_OscInitStruct.PLL.PLLMBOOST = RCC_PLLMBOOST_DIV4;
   RCC_OscInitStruct.PLL.PLLM = 3;
-  RCC_OscInitStruct.PLL.PLLN = 13;
+  RCC_OscInitStruct.PLL.PLLN = 10;
   RCC_OscInitStruct.PLL.PLLP = 2;
   RCC_OscInitStruct.PLL.PLLQ = 2;
-  RCC_OscInitStruct.PLL.PLLR = 2;
+  RCC_OscInitStruct.PLL.PLLR = 1;
   RCC_OscInitStruct.PLL.PLLRGE = RCC_PLLVCIRANGE_1;
   RCC_OscInitStruct.PLL.PLLFRACN = 0;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
@@ -266,7 +203,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB3CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
   {
     Error_Handler();
   }
@@ -311,7 +248,7 @@ static void MX_I2C2_Init(void)
 
   /* USER CODE END I2C2_Init 1 */
   hi2c2.Instance = I2C2;
-  hi2c2.Init.Timing = 0x2030143C;
+  hi2c2.Init.Timing = 0x00F07BFF;
   hi2c2.Init.OwnAddress1 = 0;
   hi2c2.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
   hi2c2.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
