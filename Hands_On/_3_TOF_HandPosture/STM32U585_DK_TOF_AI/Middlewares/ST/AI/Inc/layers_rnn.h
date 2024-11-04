@@ -14,13 +14,9 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
 #ifndef LAYERS_RNN_H
 #define LAYERS_RNN_H
-#pragma once
 
 #include "layers_common.h"
 #include "layers_nl.h"
@@ -76,6 +72,24 @@ typedef AI_ALIGNED_TYPE(struct, 4) ai_layer_rnn_ {
 
 
 /*!
+ * @brief Allocate states for a stateful network.
+ * @ingroup layers
+ *
+ * Function used to allocate states of a stateful network.
+ */
+void _allocate_states(ai_float **states, ai_u32 size_in_bytes);
+
+
+/*!
+ * @brief Deallocate states for a stateful network.
+ * @ingroup layers
+ *
+ * Function used to deallocate states of a stateful network.
+ */
+void _deallocate_states(ai_float **states);
+
+
+/*!
  * @brief Initialize a Long-Short Term Memory (LSTM) layer.
  * @ingroup layers
  *
@@ -119,6 +133,9 @@ void destroy_lstm(ai_layer * layer);
  */
 AI_INTERNAL_API
 void forward_lstm(ai_layer * layer);
+
+AI_INTERNAL_API
+void forward_lstm_is8os8ws8(ai_layer * layer);
 
 
 /*!

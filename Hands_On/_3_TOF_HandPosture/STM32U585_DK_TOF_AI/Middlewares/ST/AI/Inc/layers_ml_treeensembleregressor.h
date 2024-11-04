@@ -14,14 +14,10 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
 
 #ifndef LAYERS_TREE_ENSEMBLE_REGRESSOR_H
 #define LAYERS_TREE_ENSEMBLE_REGRESSOR_H
-#pragma once
 
 #include "layers_common.h"
 #include "layers_ml_treeensembleclassifier.h"

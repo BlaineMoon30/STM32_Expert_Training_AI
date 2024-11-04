@@ -14,13 +14,9 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
 #ifndef LAYERS_CONV2D_H
 #define LAYERS_CONV2D_H
-#pragma once
 
 #include "layers_nl.h"
 #include "layers_pool.h"
@@ -32,7 +28,7 @@
   AI_LAYER_COMMON_FIELDS_DECLARE \
   ai_u32      groups;                   /*!< groups for separable convolution */ \
   AI_CONST ai_array*  nl_params;        /*!< array pointer to non linear parameters */ \
-  func_nl     nl_func;                  /*!< function pointer to non linear transform */ \
+  ai_handle   nl_func;                  /*!< function pointer to non linear transform */ \
   ai_shape_2d filter_stride;            /*!< filter stride, how much the filter moves */ \
   ai_shape_2d dilation;                 /*!< dilation value along axis of the filter */ \
   ai_shape    filter_pad;               /*!< filter pad 4d */ \
@@ -101,6 +97,7 @@ typedef AI_ALIGNED_TYPE(struct, 4) ai_layer_conv2d_nl_pool_ {
 } ai_layer_conv2d_nl_pool;
 
 
+/*
 AI_INTERNAL_API
 void ai_dict8_dot_array_f32(ai_handle out, ai_ptr_const data0, ai_ptr_const lut,
                             const ai_float* data1, const ai_size data_size);
@@ -108,6 +105,8 @@ void ai_dict8_dot_array_f32(ai_handle out, ai_ptr_const data0, ai_ptr_const lut,
 AI_INTERNAL_API
 void ai_dict4_dot_array_f32(ai_handle out, ai_ptr_const data0, ai_ptr_const lut,
                             const ai_float* data1, const ai_size data_size);
+*/
+
 
 /******************************************************************************/
 /*  Forward Functions Section                                                 */
@@ -143,7 +142,7 @@ void forward_conv2d_if32of32wf32_group(ai_layer* layer);
  * @param layer the convolutional (conv) layer
  */
 AI_INTERNAL_API
-void forward_conv2d_if32of32wf32_pool(ai_layer* layer);
+void forward_conv2d_if32of32wf32_nl_pool(ai_layer* layer);
 
 /*!
  * @brief Computes the activations of a 2D floating point 32 pool fused dw layer.
@@ -151,7 +150,7 @@ void forward_conv2d_if32of32wf32_pool(ai_layer* layer);
  * @param layer the convolutional (conv) layer
  */
 AI_INTERNAL_API
-void forward_dw_if32of32wf32_pool(ai_layer* layer);
+void forward_dw_if32of32wf32_nl_pool(ai_layer* layer);
 
 /*!
  * @brief Computes the activations of a 2D floating point 32 pool fused convolutional group layer.
@@ -159,7 +158,7 @@ void forward_dw_if32of32wf32_pool(ai_layer* layer);
  * @param layer the convolutional (conv) layer
  */
 AI_INTERNAL_API
-void forward_conv2d_if32of32wf32_group_pool(ai_layer* layer);
+void forward_conv2d_if32of32wf32_group_nl_pool(ai_layer* layer);
 
 /*!
  * @brief Computes the activations of a GEMM layer.

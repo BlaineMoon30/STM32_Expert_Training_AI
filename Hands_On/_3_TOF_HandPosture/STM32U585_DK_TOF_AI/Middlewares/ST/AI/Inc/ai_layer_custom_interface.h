@@ -14,13 +14,9 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
 #ifndef AI_LAYER_CUSTOM_INTERFACE_H
 #define AI_LAYER_CUSTOM_INTERFACE_H
-#pragma once
 
 #include "ai_platform.h"
 #include "ai_platform_interface.h"
@@ -30,6 +26,8 @@
 #define INTQ_SCALE_FLOAT      (AI_BUFFER_META_FLAG_SCALE_FLOAT)
 #define INTQ_ZEROPOINT_U8     (AI_BUFFER_META_FLAG_ZEROPOINT_U8)
 #define INTQ_ZEROPOINT_S8     (AI_BUFFER_META_FLAG_ZEROPOINT_S8)
+#define INTQ_ZEROPOINT_U16     (AI_BUFFER_META_FLAG_ZEROPOINT_U16)
+#define INTQ_ZEROPOINT_S16     (AI_BUFFER_META_FLAG_ZEROPOINT_S16)
 
 #define AI_TENSOR_HEIGHT      (3)
 #define AI_TENSOR_WIDTH       (2)

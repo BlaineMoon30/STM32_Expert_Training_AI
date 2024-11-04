@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file    lite_nl_list.h
-  * @author  AST Embedded Analytics Research Platform
+  * @author  STMicroelectronics
   * @brief   header file of lite supported non-linearities routines 
   ******************************************************************************
   * @attention
@@ -13,9 +13,6 @@
   * in the root directory of this software component.
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
-  ******************************************************************************
-  @verbatim
-  @endverbatim
   ******************************************************************************
   */
 
@@ -68,6 +65,7 @@ LITE_NL_ENTRY(102, relu_thresholded, AI_MATH_RELU_THRESHOLDED, 2)
 LITE_NL_ENTRY(201, clip, AI_CLAMP, 3)
 LITE_NL_ENTRY(202, hard_sigmoid, AI_MATH_HARD_SIGMOID, 3)
 LITE_NL_ENTRY(203, selu, AI_MATH_SELU, 3)
+LITE_NL_ENTRY(204, gelu, AI_MATH_GELU, 2)
 
 
 #undef LITE_NL_ENTRY

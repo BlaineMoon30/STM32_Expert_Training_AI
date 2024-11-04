@@ -14,14 +14,9 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
-
-#ifndef __CORE_NET_INSPECT_INTERFACE_H_
-#define __CORE_NET_INSPECT_INTERFACE_H_
-#pragma once
+#ifndef CORE_NET_INSPECT_INTERFACE_H
+#define CORE_NET_INSPECT_INTERFACE_H
 
 #include "ai_platform.h"
 
@@ -119,4 +114,4 @@ typedef struct ai_inspect_config_s {
 
 AI_API_DECLARE_END
 
-#endif    /*__CORE_NET_INSPECT_INTERFACE_H_*/
+#endif    /* CORE_NET_INSPECT_INTERFACE_H */

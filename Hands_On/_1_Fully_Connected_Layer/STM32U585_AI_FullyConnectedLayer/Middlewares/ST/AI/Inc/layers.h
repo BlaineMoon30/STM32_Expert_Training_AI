@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file    layers.h
-  * @author  AST Embedded Analytics Research Platform
+  * @author  STMicroelectronics
   * @brief   header file of AI platform layers datatypes
   ******************************************************************************
   * @attention
@@ -14,14 +14,10 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
 
 #ifndef LAYERS_H
 #define LAYERS_H
-#pragma once
 
 #include "layers_common.h"
 #include "layers_conv2d.h"
@@ -36,7 +32,6 @@
 #include "layers_pad_generic.h"
 #include "layers_pool.h"
 #include "layers_rnn.h"
-#include "layers_upsample_generic.h"
 #include "layers_sm.h"
 #include "layers_ml.h"
 #include "layers_ml_iforest.h"
@@ -52,7 +47,10 @@
 #include "layers_pool_dqnn.h"
 #include "layers_generic_dqnn.h"
 #include "layers_upsample_generic.h"
-// #include "layers_template.h"
+#include "layers_upsample.h"
+#include "layers_resize.h"
+#include "layers_argminmax.h"
+#include "ai_math_helpers.h"
 
 
 AI_API_DECLARE_BEGIN

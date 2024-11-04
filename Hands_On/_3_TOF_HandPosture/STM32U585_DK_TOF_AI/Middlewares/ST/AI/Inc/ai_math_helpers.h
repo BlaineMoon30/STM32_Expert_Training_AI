@@ -1,3 +1,5 @@
+#ifndef AI_MATH_HELPERS_H
+#define AI_MATH_HELPERS_H
 /**
   ******************************************************************************
   * @file    ai_math_helpers.h
@@ -14,12 +16,7 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
-  */ 
-#ifndef AI_MATH_HELPERS_H
-#define AI_MATH_HELPERS_H
+  */
 #include "ai_lite_math_helpers.h"
 
 //#if defined(HAS_X86) || defined(__CC_ARM) || defined(CM4) || defined(CM7)
@@ -37,28 +34,6 @@
 
 
 AI_API_DECLARE_BEGIN
-
-/*!
- * @typedef ai_vec4_float
- * @ingroup ai_datatypes_internal
- * @brief 32bit X 4 float (optimization for embedded MCU)
- */
-typedef struct _ai_vec4_float {
-    ai_float a1;
-    ai_float a2;
-    ai_float a3;
-    ai_float a4;
-} ai_vec4_float;
-
-
-#define AI_VEC4_FLOAT(ptr_) \
-  _get_vec4_float((ai_handle)(ptr_))
-
-AI_DECLARE_STATIC
-ai_vec4_float _get_vec4_float(const ai_handle fptr)
-{
-    return *((const ai_vec4_float*)fptr);
-}
 
 #if defined(STM32_DOT_INLINE_OPTIM)
 
@@ -114,7 +89,7 @@ void __ai_math_dot_array(
     data0 += 4;
     data_size -= 16u;
   }
-#else
+
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
    ** a second loop below computes the remaining 1 to 3 samples. */
   while (data_size >= 4u) {
@@ -272,6 +247,15 @@ AI_INTERFACE_ENTRY ai_float ai_math_swish(const ai_float x);
 AI_INTERFACE_ENTRY ai_float ai_math_hard_swish(const ai_float x);
 
 /*!
+ * @brief platform optimized parametric gelu on a float value
+ * @ingroup math_helpers
+ * @param x input value
+ * @param aaproximate input value
+ * @return gelu of the value
+ */
+AI_INTERFACE_ENTRY ai_float ai_math_gelu(const ai_float x, const ai_bool approximate);
+
+/*!
  * @brief platform optimized parametric sign function on a float value
  * @ingroup math_helpers
  * @param x input value
@@ -311,10 +295,44 @@ AI_INTERFACE_ENTRY void ai_div_buffer_UINT8(ai_handle out, const ai_handle a, co
                                             const ai_handle pScale1, const ai_handle pZp1, const ai_handle pScale2, const ai_handle pZp2,
                                             const ai_handle pScaleout, const ai_handle pZpout, const ai_i32 scalar_op);
 
+AI_INTERFACE_ENTRY void ai_bitshift_right(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_bitshift_right_buffer(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_bitshift_right_u32(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_bitshift_right_buffer_u32(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_bitshift_right_u16(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_bitshift_right_buffer_u16(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_bitshift_right_u8(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_bitshift_right_buffer_u8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_bitshift_left(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_bitshift_left_buffer(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_bitshift_left_u32(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_bitshift_left_buffer_u32(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_bitshift_left_u16(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_bitshift_left_buffer_u16(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_bitshift_left_u8(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_bitshift_left_buffer_u8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+
 AI_INTERFACE_ENTRY void ai_floor_div(ai_handle out, const ai_handle a, const ai_handle b);
 AI_INTERFACE_ENTRY void ai_floor_div_buffer(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
 AI_INTERFACE_ENTRY void ai_floor_mod(ai_handle out, const ai_handle a, const ai_handle b);
 AI_INTERFACE_ENTRY void ai_floor_mod_buffer(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+
+AI_INTERFACE_ENTRY void ai_mod(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_mod_buffer(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_mod_f32(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_mod_buffer_f32(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_mod_s32(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_mod_buffer_s32(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_mod_s16(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_mod_buffer_s16(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_mod_s8(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_mod_buffer_s8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_mod_u32(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_mod_buffer_u32(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_mod_u16(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_mod_buffer_u16(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_mod_u8(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_mod_buffer_u8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
 
 AI_INTERFACE_ENTRY void ai_max(ai_handle out, const ai_handle a, const ai_handle b);
 AI_INTERFACE_ENTRY void ai_max_buffer(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
@@ -525,6 +543,23 @@ AI_INTERFACE_ENTRY void ai_equal_u16(ai_handle out, const ai_handle a, const ai_
 AI_INTERFACE_ENTRY void ai_equal_buffer_u16(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
 AI_INTERFACE_ENTRY void ai_equal_u8(ai_handle out, const ai_handle a, const ai_handle b);
 AI_INTERFACE_ENTRY void ai_equal_buffer_u8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+
+AI_INTERFACE_ENTRY void ai_not_equal(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_not_equal_buffer(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_not_equal_f32(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_not_equal_buffer_f32(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_not_equal_s32(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_not_equal_buffer_s32(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_not_equal_s16(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_not_equal_buffer_s16(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_not_equal_s8(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_not_equal_buffer_s8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_not_equal_u32(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_not_equal_buffer_u32(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_not_equal_u16(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_not_equal_buffer_u16(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
+AI_INTERFACE_ENTRY void ai_not_equal_u8(ai_handle out, const ai_handle a, const ai_handle b);
+AI_INTERFACE_ENTRY void ai_not_equal_buffer_u8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
 
 AI_INTERFACE_ENTRY void ai_squared_diff(ai_handle out, const ai_handle a, const ai_handle b);
 AI_INTERFACE_ENTRY void ai_squared_diff_buffer(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);

@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    lite_upsample.h
   * @author  AIS
-  * @brief   header file of AI platform lite pw kernel datatypes
+  * @brief   header file of AI platform lite upsample kernel datatypes
   ******************************************************************************
   * @attention
   *
@@ -14,13 +14,10 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
 #ifndef LITE_UPSAMPLE_GENERIC_H
 #define LITE_UPSAMPLE_GENERIC_H
-#pragma once
+
 
 #include "ai_lite_interface.h"
 
@@ -38,6 +35,7 @@ void forward_lite_upsample_generic_nearest(const ai_u8* in_data,
 void forward_lite_upsample_nearest(ai_ptr in_data,
                                    ai_ptr out_data,
                                    const ai_size width_in,
+                                   const ai_size height_in,
                                    const ai_float width_scale,
                                    const ai_float height_scale,
                                    const ai_size width_out,

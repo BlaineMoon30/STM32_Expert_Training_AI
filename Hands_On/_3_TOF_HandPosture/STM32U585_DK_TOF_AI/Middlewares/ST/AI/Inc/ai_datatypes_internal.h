@@ -14,14 +14,9 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
-
 #ifndef AI_DATATYPES_INTERNAL_H
 #define AI_DATATYPES_INTERNAL_H
-#pragma once
 
 #include "ai_datatypes.h"
 #include "ai_datatypes_defines.h"
@@ -140,10 +135,10 @@
   AI_STORAGE_KLASS_DATA(stride_, ai_stride_dimension)[pos_]
 
 #define AI_STRIDE_GET_ELEM(stride_, pos_) \
-  ((pos_ < AI_STRIDE_SIZE(stride_)) ? AI_STRIDE_ELEM(stride_, pos_) : 0)
+  (((pos_) < AI_STRIDE_SIZE(stride_)) ? AI_STRIDE_ELEM(stride_, pos_) : 0)
 
 #define AI_STRIDE_SET_ELEM(stride_, pos_, val_) \
-  if (pos_ < AI_STRIDE_SIZE(stride_)) AI_STRIDE_ELEM(stride_, pos_) = val_;
+  if ((pos_) < AI_STRIDE_SIZE(stride_)) AI_STRIDE_ELEM(stride_, pos_) = (val_);
 
 #define AI_STRIDE_TYPE(stride_) \
   AI_STORAGE_KLASS_TYPE(stride_)
@@ -156,7 +151,7 @@
 
 #define AI_STRIDE_BCAST_CLONE(dst_, src_) \
 { \
-  for (ai_size i = 0; i < AI_STRIDE_SIZE(dst_); i++) { \
+  for (ai_size i=0; i<AI_STRIDE_SIZE(dst_); i++) { \
     AI_STRIDE_SET_ELEM(dst_, i, AI_STRIDE_GET_ELEM(src_, i)); \
   } \
 }
@@ -336,6 +331,7 @@ ai_size ai_shape_get_size(const ai_shape* shape)
 {
   AI_ASSERT(shape)
   ai_size dim = AI_SHAPE_SIZE(shape);
+  AI_ASSERT(dim > 0)
   ai_size size = 1;
   while (dim>0) {
     dim--;

@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    lite_maxpool_dqnn.h
   * @author  AIS
-  * @brief   header file of AI platform lite maxpool kernel datatypes
+  * @brief   header file of AI platform lite dqnn maxpool kernel datatypes
   ******************************************************************************
   * @attention
   *
@@ -14,13 +14,10 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
 #ifndef LITE_MAXPOOL_DQNN_H
 #define LITE_MAXPOOL_DQNN_H
-#pragma once
+
 
 #include "ai_lite_interface.h"
 

@@ -1,5 +1,22 @@
 #ifndef AI_LITE_MATH_HELPERS_H
 #define AI_LITE_MATH_HELPERS_H
+/**
+  ******************************************************************************
+  * @file    ai_lite_math_helpers.h
+  * @author  STMicroelectronics
+  * @brief   Math helpers routines header file for lite APIs.
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2022 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
 #include <math.h>
 
 #include "ai_platform.h"
@@ -121,6 +138,18 @@
 #define AI_MATH_HARD_SIGMOID(x, alpha, beta) \
     AI_MATH_CLIP_LINEAR_REMAP(x, alpha, beta)
 
+#define AI_MATH_GELU_NO_APPROXIMATE(x) \
+    ((x / 2.0f) * (1.0f + AI_MATH_ERF(x/AI_MATH_SQRT(2.0f))))
+
+#define AI_MATH_GELU_APPROXIMATE(x) \
+    ((x / 2.0f) * (1.0f + AI_MATH_TANH(AI_MATH_SQRT(2.0f/PI)*(x + 0.044715f * AI_MATH_POW(x, 3.0f)))))
+
+#define AI_MATH_GELU(x, approximate) \
+    (((bool)approximate) ? AI_MATH_GELU_APPROXIMATE(x) : AI_MATH_GELU_NO_APPROXIMATE(x))
+
+
+
+
 /* Formula with higher accuracy */
 #define AI_MATH_SWISH(x) \
   ((x) * AI_MATH_SIGMOID(x))
@@ -138,14 +167,81 @@
 AI_API_DECLARE_BEGIN
 
 /*!
+ * @typedef ai_vec4_float
+ * @ingroup ai_datatypes_internal
+ * @brief 32bit X 4 float (optimization for embedded MCU)
+ */
+typedef struct {
+  ai_float a1;
+  ai_float a2;
+  ai_float a3;
+  ai_float a4;
+} ai_vec4_float;
+
+
+#define AI_VEC4_FLOAT(ptr_) \
+  _get_vec4_float((ai_handle)(ptr_))
+
+
+AI_DECLARE_STATIC
+ai_vec4_float _get_vec4_float(const ai_handle fptr)
+{
+  return *((const ai_vec4_float*)fptr);
+}
+
+/*****************************************************************************/
+typedef struct {
+  ai_u16 numRows;       /**< number of rows of the matrix.     */
+  ai_u16 numCols;       /**< number of columns of the matrix.  */
+  ai_float *pData;      /**< points to the data of the matrix. */
+} ai_matrix_f32;
+
+/*!
+  * @brief general 2D matrix initialization
+  * @ingroup ai_lite_math_helpers
+  * @param S pointer to S matrix
+  * @param nRows number of rows of S matrix
+  * @param nColumns number of columns of S matrix
+  * @param pData pointer to S matrix data
+  */
+AI_INTERFACE_ENTRY
+void st_mat_init_f32(ai_matrix_f32* S,
+  const uint16_t nRows,
+  const uint16_t nColumns,
+  float*         pData);
+
+
+/*!
+  * @brief general 2D matrix multiplication on float values
+  * @ingroup ai_lite_math_helpers
+  * @param pSrcA pointer to A matrix
+  * @param pSrcB pointer to B matrix
+  * @param pSrcC pointer to C matrix/array
+  * @param alpha multiplier of A*B product
+  * @param beta multiplier of C
+  * @param tA flag for A transpose
+  * @param tB flag for B transpose
+  * @param pDstY matrix result
+  * @return ARM_MATH_SUCCESS in case of success, ARM_MATH_SIZE_MISMATCH else
+  */
+AI_INTERFACE_ENTRY
+uint32_t st_mat_gemm_f32(const ai_matrix_f32* pSrcA,
+                         const ai_matrix_f32* pSrcB,
+                         const ai_matrix_f32* pSrcC,
+                         const float alpha, const float beta,
+                         const int8_t tA, const int8_t tB,
+                         ai_matrix_f32 * pDstY);
+
+/*!
  * @brief platform optimized square root on a float value
- * @ingroup math_helpers
+ * @ingroup ai_lite_math_helpers
  * @param x input value
  * @return square root of the value
  */
-AI_INTERFACE_ENTRY ai_float ai_math_sqrt(const ai_float x);
+AI_INTERFACE_ENTRY
+float ai_math_sqrt(const float x);
 
 
 AI_API_DECLARE_END
 
-#endif /* AI_LITE_MATH_HELPERS_H */
+#endif /*AI_LITE_MATH_HELPERS_H*/

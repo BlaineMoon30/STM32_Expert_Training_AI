@@ -6,16 +6,13 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2018 STMicroelectronics.
+  * Copyright (c) 2018-2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
   * in the root directory of this software component.
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
-  ******************************************************************************
-  @verbatim
-  @endverbatim
   ******************************************************************************
   */
 
@@ -104,10 +101,8 @@ LAYER_ENTRY(GATHER, LAYER_ID(28), gather, forward_gather, NULL, NULL)
 LAYER_ENTRY(PACK, LAYER_ID(29), pack, forward_pack, NULL, NULL)
 /*!< Unpack layer */
 LAYER_ENTRY(UNPACK, LAYER_ID(30), unpack, forward_unpack, NULL, NULL)
-/*!< ArgMax layer */
-LAYER_ENTRY(ARGMAX, LAYER_ID(31), argmax, forward_argmax, NULL, NULL)
-/*!< ArgMin layer */
-LAYER_ENTRY(ARGMIN, LAYER_ID(32), argmin, forward_argmin, NULL, NULL)
+/*!< ArgMin & ArgMax layers */
+LAYER_ENTRY(ARGMINMAX, LAYER_ID(31), argminmax, NULL, NULL, NULL)
 /*!< Cast Neural Network Layer */
 LAYER_ENTRY(CAST, LAYER_ID(33), cast, forward_cast, NULL, NULL)
 /*!< iForest layer */

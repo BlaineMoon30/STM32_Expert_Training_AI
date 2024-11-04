@@ -1,3 +1,5 @@
+#ifndef CORE_COMMON_H
+#define CORE_COMMON_H
 /**
   ******************************************************************************
   * @file    core_common.h
@@ -14,19 +16,10 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
-
-#ifndef CORE_COMMON_H
-#define CORE_COMMON_H
-#pragma once
-
 #include "ai_platform.h"
 #include "ai_platform_interface.h"
 #include "core_datatypes.h"
-// #include "core_log.h"
 
 /*!
  * @defgroup core_common Common Core Library Routines
@@ -104,7 +97,7 @@
   ai_id_obj id;                   /*!< node object instance id (see @ref ai_id_obj) */ \
   ai_flags flags;                 /*!< node object flags */ \
   ai_klass_obj klass;             /*!< opaque handler to specific layer implementations */ \
-  struct ai_network_s* network;   /*!< handle to global network context */ \
+  ai_network* network;            /*!< handle to global network context */ \
   struct ai_node_s* next;         /*!< the next node object in the sequence */ \
   node_func forward;              /*!< forward function for the node */ \
   AI_CONST ai_tensor_chain* tensors; /*!< pointer to node tensor chain */
@@ -192,14 +185,6 @@
   (GET_TENSOR_LIST_ITEM(GET_TENSOR_LIST_SCRATCH(chain_), (pos_)))
 
 /******************************************************************************/
-
-#if 1
-  #define SECTION_SERIAL(expr)    expr
-  #define SECTION_PARALLEL(expr)
-#else
-  #define SECTION_SERIAL(expr)
-  #define SECTION_PARALLEL(expr)  expr
-#endif
 
 AI_API_DECLARE_BEGIN
 

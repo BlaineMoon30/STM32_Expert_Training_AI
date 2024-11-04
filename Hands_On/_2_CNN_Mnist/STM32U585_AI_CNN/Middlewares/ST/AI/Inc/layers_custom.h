@@ -1,7 +1,9 @@
+#ifndef LAYERS_CUSTOM_H
+#define LAYERS_CUSTOM_H
 /**
   ******************************************************************************
   * @file    layers_custom.h
-  * @author  Marco Lattuada
+  * @author  STMicroelectronics
   * @brief   header file of AI platform custom layers datatype
   ******************************************************************************
   * @attention
@@ -14,14 +16,7 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
-#ifndef LAYERS_CUSTOM_H
-#define LAYERS_CUSTOM_H
-#pragma once
-
 #include "layers_common.h"
 
 /*!
@@ -43,4 +38,4 @@ typedef ai_layer_stateful ai_layer_custom;
 
 AI_API_DECLARE_END
 
-#endif /*LAYERS_CUSTOM_H*/
+#endif /* LAYERS_CUSTOM_H */

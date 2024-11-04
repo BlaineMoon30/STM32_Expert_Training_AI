@@ -14,16 +14,10 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
-
 #ifndef LAYERS_COMMON_H
 #define LAYERS_COMMON_H
-#pragma once
 
-// #include <stdlib.h>
 #ifdef USE_CYCLE_MEASUREMENTS
   #include "layers_cycles_estimation.h"
 #endif
@@ -33,8 +27,6 @@
 #include "core_common.h"
 
 /* optimizations */
-#define AI_OPTIM_DICT8_DOT_ARRAY_F32    (1)
-#define AI_OPTIM_DICT8_DTCM             (1)
 #define AI_OPTIM_FUNC_MP_ARRAY_F32      (0)
 
 
@@ -228,33 +220,9 @@ AI_INTERNAL_API
 ai_bool ai_layer_type_is_valid(const ai_layer_type type);
 
 #ifdef HAS_AI_ASSERT
+
 /*!
- * @brief chack scratch size computed with actual scratch buffer size
- * @ingroup layers
- * @param layer_type the layer type
- * @param fmt buffers format 
- * @param filt_width filter width (when relevant)
- * @param filt_height filter height (when relevant)
- * @param n_channel_in the number of channels in
- * @param n_channel_out the number of channels out
- * @param is_pointwise is pointwise convulation (conv2d)
- * @param is_rgb is rgb convolution (conv2d)
- * @param is depthwise is depthwise convolution (conv2d)
- * @param is_ch_wise has weights per channel
- * @param is_sssa is signed
- * @param p_tensor_scratch the scratch tensor
- * @param p_function_name the name of the function
- * @param line_nb the the line of the function
- */
-AI_INTERNAL_API
-ai_size ai_layer_get_scratch_size( ai_layer_type layer_type, ai_array_format fmt,
-                          ai_size filt_width, ai_size filt_height,
-                          ai_u16 n_channel_in, ai_u16 n_channel_out,
-                          ai_bool is_pointwise, ai_bool is_rgb,
-			  ai_bool is_depthwise,  ai_bool is_ch1st, ai_bool is_ch_wise,
-                          ai_bool is_sss);
-/*!
- * @brief chack scratch size computed with actual scratch buffer size
+ * @brief check scratch size computed with actual scratch buffer size
  * @ingroup layers
  * @param layer_type the layer type
  * @param fmt buffers format 
@@ -276,23 +244,38 @@ void ai_layer_check_scratch_size( ai_layer_type layer_type, ai_array_format fmt,
                           ai_size filt_width, ai_size filt_height,
                           ai_u16 n_channel_in, ai_u16 n_channel_out,
                           ai_bool is_pointwise, ai_bool is_rgb,
-			  ai_bool is_depthwise,  ai_bool is_ch1st, ai_bool is_ch_wise,
-                          ai_bool is_sssa, ai_tensor *p_tensor_scratch,
-                          const char *p_function_name, int line_nb);
+                          ai_bool is_depthwise,  ai_bool is_ch1st, ai_bool is_ch_wise,
+                          ai_bool is_sssa, ai_u32 tensor_scratch_size_bytes,
+                          const char *p_function_name, const int line_nb);
 
 #define CHECK_SCRATCH_BUFFER_SIZE( layer_type, fmt, \
                                    filt_width, filt_height, \
                                    n_channel_in, n_channel_out, \
                                    is_pointwise, is_rgb, \
-                                   is_depthwise, is_ch1st, is_ch_wise,	\
-                                   is_sssa_ch, p_tensor_scratch) \
-    ai_layer_check_scratch_size(layer_type, fmt, \
-                             filt_width, filt_height, \
-                             n_channel_in, n_channel_out, \
-                             is_pointwise, is_rgb, \
-			     is_depthwise, is_ch1st, is_ch_wise,	\
-                             is_sssa_ch, p_tensor_scratch,\
-                             __FUNCTION__, __LINE__);
+                                   is_depthwise, is_ch1st, is_ch_wise, \
+                                   is_sssa_ch, tensor_scratch_size_bytes) \
+    ai_layer_check_scratch_size( layer_type, fmt, \
+                                 filt_width, filt_height, \
+                                 n_channel_in, n_channel_out, \
+                                 is_pointwise, is_rgb, \
+                                 is_depthwise, is_ch1st, is_ch_wise, \
+                                 is_sssa_ch, tensor_scratch_size_bytes, \
+                                 __FUNCTION__, __LINE__);
+
+#define IS_PW 1
+#define IS_RGB 1
+#define IS_DW 1
+#define IS_CH1ST 1
+#define IS_CH_WISE 1
+#define IS_SSSA_CH 1
+
+#define NOT_PW  0
+#define NOT_RGB  0
+#define NOT_DW  0
+#define NOT_CH1ST 0
+#define NOT_CH_WISE 0
+#define NOT_SSSA_CH 0
+
 #endif
 
 AI_API_DECLARE_END

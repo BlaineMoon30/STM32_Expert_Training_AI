@@ -14,19 +14,13 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
-
 #ifndef AI_DATATYPES_FORMAT_H
 #define AI_DATATYPES_FORMAT_H
-#pragma once
 
 #include "ai_platform.h"
 #include "ai_datatypes_defines.h"
 
-// #include "core_datatypes.h"
 
 /*!
  * @defgroup ai_datatypes_format Definiton and Macro of array and buffer formats

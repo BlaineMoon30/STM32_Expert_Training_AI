@@ -15,14 +15,10 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
-
 #ifndef AI_CORE_DATATYPES_H
 #define AI_CORE_DATATYPES_H
-#pragma once
+
 #include <stdint.h>
 
 /*!
@@ -33,13 +29,15 @@
 /*!
  * @brief platform runtime core library version
  */
-#define AI_PLATFORM_RUNTIME_MAJOR    8
-#define AI_PLATFORM_RUNTIME_MINOR    0
-#define AI_PLATFORM_RUNTIME_MICRO    0
-
-#define AI_MAGIC_CONTEXT_TOKEN       (0xA1C00100)   /*!< AI Cool! Magic Token */
-
-#define AI_MAGIC_INSPECTOR_TOKEN     (0xA1C00101)   /*!< AI Cool! Magic Token */
+#ifndef AI_PLATFORM_RUNTIME_MAJOR
+#define AI_PLATFORM_RUNTIME_MAJOR    (9)
+#endif
+#ifndef AI_PLATFORM_RUNTIME_MINOR
+#define AI_PLATFORM_RUNTIME_MINOR    (1)
+#endif
+#ifndef AI_PLATFORM_RUNTIME_MICRO
+#define AI_PLATFORM_RUNTIME_MICRO    (0)
+#endif
 
 
 #define AI_ID_OBJ(id) \

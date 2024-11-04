@@ -15,13 +15,9 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
 #ifndef LAYERS_GENERIC_H
 #define LAYERS_GENERIC_H
-#pragma once
 
 #include "layers_common.h"
 
@@ -61,21 +57,11 @@ typedef AI_ALIGNED_TYPE(struct, 4) ai_layer_time_delay_ {
  * This layer defines the params of a splitting layer. It is intended to be used
  * by his associated forward function @ref forward_split
  */
-//typedef AI_ALIGNED_TYPE(struct, 4) ai_layer_split_ {
-//  AI_LAYER_COMMON_FIELDS_DECLARE
-//  ai_u16             out_layers_count; /*!< number of output layers to split*/
-//  ai_u16             out_layer_curr;   /*!< current layer to split  */
-//  ai_layer**         out_layers;  /*!< output layers list */
-//  ai_tensor**        out_tensors; /*!< output tensors list */
-//  ai_tensor*         in_tensor;   /*!< input tensor */
-//  func_copy_tensor   copy_to_out_tensor; /*!< pointer to copy tensor func
-//                                         (NULL = no copy) */
-//} ai_layer_split;
 
 typedef AI_ALIGNED_TYPE(struct, 4) ai_layer_split_ {
     AI_LAYER_COMMON_FIELDS_DECLARE
-    ai_shape_dimension axis;
-    //ai_tensor* num_or_size_splits;
+    const ai_i32              outer_elems;
+    const ai_i32              outer_elems_stride;
 } ai_layer_split;
 
 
@@ -126,7 +112,6 @@ typedef AI_ALIGNED_TYPE(struct, 4) ai_layer_gather_ {
   ai_i16 axis;    /*!< Which axis to gather on It's optional*/
   ai_tensor* indices;  /*!< Indices of corrisponding axis in axes*/
   } ai_layer_gather;
-
 
 /*!
  * @struct ai_layer_tile
@@ -254,22 +239,11 @@ typedef AI_ALIGNED_TYPE(struct, 4) ai_layer_add_ {
   ai_layer_base*     next_layer;  /*!< pointer to next layer to process */
 } ai_layer_add;
 
-typedef AI_ALIGNED_TYPE(struct, 4) ai_layer_argmax_ {
+typedef AI_ALIGNED_TYPE(struct, 4) ai_layer_argminmax_ {
   AI_LAYER_COMMON_FIELDS_DECLARE
   ai_i16   axis;
   ai_i16   select_last_index;
-} ai_layer_argmax;
-
-typedef AI_ALIGNED_TYPE(struct, 4) ai_layer_argmin_ {
-  AI_LAYER_COMMON_FIELDS_DECLARE
-  ai_i16   axis;
-  ai_i16   select_last_index;
-} ai_layer_argmin;
-
-// TODO: REMOVE This legacy
-typedef ai_layer_argmax ai_layer_ArgMax;
-typedef ai_layer_argmin ai_layer_ArgMin;
-
+} ai_layer_argminmax;
 
 /*!
  * @struct ai_layer_transpose
@@ -506,7 +480,7 @@ void forward_add(ai_layer* layer);
 /*!
  * @brief Compute the indices of the max elements of the input tensor's element along the provided axis.
  * @ingroup layers_generic
- * @param layer argmax layer
+ * @param layer argminmax layer
  */
 AI_INTERNAL_API
 void forward_argmax(ai_layer* layer);
@@ -514,7 +488,7 @@ void forward_argmax(ai_layer* layer);
 /*!
  * @brief Compute the indices of the min elements of the input tensor's element along the provided axis.
  * @ingroup layers_generic
- * @param layer argmin layer
+ * @param layer argminmax layer
  */
 AI_INTERNAL_API
 void forward_argmin(ai_layer* layer);
@@ -765,6 +739,18 @@ void forward_add_integer_UINT8(ai_layer* layer);
  */
 AI_INTERNAL_API
 void forward_reverse(ai_layer *pLayer);
+
+
+/*!
+ * @brief Upsample an input tensors with unsigned 8-bit integer input,.
+ *        It is to be used also for other formats, since the function only
+ *        performs memory copy.
+ * @ingroup layers_generic
+ * @param layer the upsampled layer
+ */
+AI_INTERNAL_API
+void forward_upsample_generic(ai_layer* layer);
+
 
 AI_API_DECLARE_END
 

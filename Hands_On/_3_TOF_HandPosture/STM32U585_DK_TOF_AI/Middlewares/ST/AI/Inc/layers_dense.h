@@ -1,3 +1,5 @@
+#ifndef LAYERS_DENSE_H
+#define LAYERS_DENSE_H
 /**
   ******************************************************************************
   * @file    layers_dense.h
@@ -14,15 +16,7 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
-
-#ifndef LAYERS_DENSE_H
-#define LAYERS_DENSE_H
-#pragma once
-
 
 #include "layers_common.h"
 

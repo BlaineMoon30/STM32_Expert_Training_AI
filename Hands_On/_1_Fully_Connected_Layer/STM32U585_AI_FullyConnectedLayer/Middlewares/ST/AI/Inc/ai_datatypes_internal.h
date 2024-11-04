@@ -14,14 +14,9 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
-
 #ifndef AI_DATATYPES_INTERNAL_H
 #define AI_DATATYPES_INTERNAL_H
-#pragma once
 
 #include "ai_datatypes.h"
 #include "ai_datatypes_defines.h"
@@ -336,6 +331,7 @@ ai_size ai_shape_get_size(const ai_shape* shape)
 {
   AI_ASSERT(shape)
   ai_size dim = AI_SHAPE_SIZE(shape);
+  AI_ASSERT(dim > 0)
   ai_size size = 1;
   while (dim>0) {
     dim--;

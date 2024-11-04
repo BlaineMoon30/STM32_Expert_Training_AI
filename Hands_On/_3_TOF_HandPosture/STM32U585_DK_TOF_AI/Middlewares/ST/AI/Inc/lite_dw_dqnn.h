@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    lite_dw_dqnn.h
   * @author  AIS
-  * @brief   header file of AI platform lite dw kernel datatypes
+  * @brief   header file of AI platform lite integer depthwise kernel datatypes
   ******************************************************************************
   * @attention
   *
@@ -14,13 +14,10 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
 #ifndef LITE_DW_DQNN_H
 #define LITE_DW_DQNN_H
-#pragma once
+
 
 #include "ai_lite_interface.h"
 

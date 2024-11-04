@@ -14,14 +14,10 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
 
 #ifndef LAYERS_IFOREST_H
 #define LAYERS_IFOREST_H
-#pragma once
 
 #include "layers_common.h"
 

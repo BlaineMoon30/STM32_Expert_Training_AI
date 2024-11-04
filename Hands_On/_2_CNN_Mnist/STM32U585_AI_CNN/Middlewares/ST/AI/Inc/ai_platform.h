@@ -14,17 +14,14 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
-
 #ifndef AI_PLATFORM_H
 #define AI_PLATFORM_H
-#pragma once
 
 #include <stdint.h>
 #include <stddef.h>
+
+#define __STDC_FORMAT_MACROS 1
 #include <inttypes.h>
 
 #ifndef AI_PLATFORM_API_MAJOR
@@ -264,19 +261,20 @@ typedef int32_t ai_buffer_format;
 #define AI_BUFFER_META_FLAG_SCALE_FLOAT     (0x1U << 0)
 #define AI_BUFFER_META_FLAG_ZEROPOINT_U8    (0x1U << 1)
 #define AI_BUFFER_META_FLAG_ZEROPOINT_S8    (0x1U << 2)
-#define AI_BUFFER_META_FLAG_ZEROPOINT_U16    (0x1U << 3)
-#define AI_BUFFER_META_FLAG_ZEROPOINT_S16    (0x1U << 4)
+#define AI_BUFFER_META_FLAG_ZEROPOINT_U16   (0x1U << 3)
+#define AI_BUFFER_META_FLAG_ZEROPOINT_S16   (0x1U << 4)
 
 /*! ai_buffer format variable flags & macros *********************************/
-#define AI_BUFFER_FMT_TYPE_NONE          (0x0)
-#define AI_BUFFER_FMT_TYPE_FLOAT         (0x1)
-#define AI_BUFFER_FMT_TYPE_Q             (0x2)
-#define AI_BUFFER_FMT_TYPE_BOOL          (0x3)
+#define AI_BUFFER_FMT_TYPE_NONE             (0x0)
+#define AI_BUFFER_FMT_TYPE_FLOAT            (0x1)
+#define AI_BUFFER_FMT_TYPE_Q                (0x2)
+#define AI_BUFFER_FMT_TYPE_BOOL             (0x3)
 
-#define AI_BUFFER_FMT_FLAG_CONST         (0x1U<<30)
-#define AI_BUFFER_FMT_FLAG_STATIC        (0x1U<<29)
-#define AI_BUFFER_FMT_FLAG_IS_IO         (0x1U<<27)
-#define AI_BUFFER_FMT_FLAG_PERSISTENT    (0x1U<<29)
+#define AI_BUFFER_FMT_FLAG_CONST            (0x1U<<30)
+#define AI_BUFFER_FMT_FLAG_STATIC           (0x1U<<29)
+#define AI_BUFFER_FMT_FLAG_IS_IO            (0x1U<<27)
+#define AI_BUFFER_FMT_FLAG_PERSISTENT       (0x1U<<29)
+
 
 #define AI_BUFFER_FMT_PACK(value_, mask_, bits_) \
   ( ((value_) & (mask_)) << (bits_) )
@@ -454,16 +452,6 @@ AI_DEPRECATED
   .flags = AI_FLAG_NONE, \
   .size = (h_) * (w_) * AI_PAD_CHANNELS(format_, ch_), \
   .shape = AI_BUFFER_SHAPE_INIT(AI_SHAPE_BCWH, 4, (n_batches_), (ch_), (w_), (h_)), \
-}
-
-AI_DEPRECATED
-#define AI_BUFFER_OBJ_INIT_STATIC(type_, format_, h_, w_, ch_, n_batches_, ...) \
-{ .format = (ai_buffer_format)(format_), \
-  .data = (ai_handle)((type_[]){__VA_ARGS__}), \
-  .meta_info = NULL, \
-  .flags = AI_FLAG_NONE, \
-  .size = (h_) * (w_) * AI_PAD_CHANNELS(format_, ch_), \
-  .shape = AI_BUFFER_SHAPE_INIT(AI_SHAPE_BCWH, 4, (n_batches_), (ch_), (w_), (h_)) \
 }
 
 /* 7.1 new macro API */
@@ -882,15 +870,20 @@ typedef enum {
 
 #define OUTPUT_PADDING_FLAG (1 << 0)
 #define CHANNEL_FIRST_FLAG  (1 << 1)
+/* Padding pattern supported:         */
+/* 0 = (1, 1, 1,1),  1 = (0, 0, 2, 2) */
+#define CHANNEL_PADDING_PATTERN  (1 << 2)  
 /* Carefull when changing those definitions
    bit0 shall always select output padding (Valid vs Same)
    bit1 shall always select Channel first /channel lst format
+   bit2 shall always select padding pattern (1, 1, 1, 1) (stride1) or (0, 0, 2, 2) (stride2)
 */
 typedef enum {
   AI_LAYER_FORMAT_CHANNEL_LAST_VALID  = 0x0,
   AI_LAYER_FORMAT_CHANNEL_LAST_SAME  = 0x1,
   AI_LAYER_FORMAT_CHANNEL_FIRST_VALID = 0x2,
   AI_LAYER_FORMAT_CHANNEL_FIRST_SAME = 0x3,
+  AI_LAYER_FORMAT_CHANNEL_FIRST_SAME2 = 0x7,
 } ai_layer_format_type;
 
 /*! ai_platform public APIs **************************************************/

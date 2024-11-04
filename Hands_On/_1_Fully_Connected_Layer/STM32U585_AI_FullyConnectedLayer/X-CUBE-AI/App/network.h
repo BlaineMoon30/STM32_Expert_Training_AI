@@ -2,12 +2,12 @@
   ******************************************************************************
   * @file    network.h
   * @author  AST Embedded Analytics Research Platform
-  * @date    Sun Aug 20 00:38:08 2023
+  * @date    2024-11-04T20:43:11+0900
   * @brief   AI Tool Automatic Code Generator for Embedded NN computing
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -15,10 +15,8 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   ******************************************************************************
   */
-
 #ifndef AI_NETWORK_H
 #define AI_NETWORK_H
-#pragma once
 
 #include "network_config.h"
 #include "ai_platform.h"
@@ -45,7 +43,7 @@ AI_DEPRECATED
 #define AI_NETWORK_IN_SIZE_BYTES { \
   AI_NETWORK_IN_1_SIZE_BYTES, \
 }
-#define AI_NETWORK_IN_1_FORMAT      AI_BUFFER_FORMAT_FLOAT
+#define AI_NETWORK_IN_1_FORMAT      (AI_BUFFER_FORMAT_FLOAT)
 #define AI_NETWORK_IN_1_CHANNEL     (4)
 #define AI_NETWORK_IN_1_SIZE        (4)
 #define AI_NETWORK_IN_1_SIZE_BYTES  (16)
@@ -63,7 +61,7 @@ AI_DEPRECATED
 #define AI_NETWORK_OUT_SIZE_BYTES { \
   AI_NETWORK_OUT_1_SIZE_BYTES, \
 }
-#define AI_NETWORK_OUT_1_FORMAT      AI_BUFFER_FORMAT_FLOAT
+#define AI_NETWORK_OUT_1_FORMAT      (AI_BUFFER_FORMAT_FLOAT)
 #define AI_NETWORK_OUT_1_CHANNEL     (3)
 #define AI_NETWORK_OUT_1_SIZE        (3)
 #define AI_NETWORK_OUT_1_SIZE_BYTES  (12)
@@ -106,6 +104,7 @@ ai_bool ai_network_get_info(
   ai_handle network, ai_network_report* report);
 
 
+
 /*!
  * @brief Get network library report as a datastruct.
  * @ingroup network
@@ -117,6 +116,7 @@ ai_bool ai_network_get_info(
 AI_API_ENTRY
 ai_bool ai_network_get_report(
   ai_handle network, ai_network_report* report);
+
 
 /*!
  * @brief Get first network error code.
@@ -132,6 +132,7 @@ ai_bool ai_network_get_report(
 AI_API_ENTRY
 ai_error ai_network_get_error(ai_handle network);
 
+
 /*!
  * @brief Create a neural network.
  * @ingroup network
@@ -145,6 +146,7 @@ AI_API_ENTRY
 ai_error ai_network_create(
   ai_handle* network, const ai_buffer* network_config);
 
+
 /*!
  * @brief Destroy a neural network and frees the allocated memory.
  * @ingroup network
@@ -156,6 +158,7 @@ ai_error ai_network_create(
  */
 AI_API_ENTRY
 ai_handle ai_network_destroy(ai_handle network);
+
 
 /*!
  * @brief Initialize the data structures of the network.
@@ -175,6 +178,7 @@ AI_API_ENTRY
 ai_bool ai_network_init(
   ai_handle network, const ai_network_params* params);
 
+
 /*!
  * @brief Create and initialize a neural network (helper function)
  * @ingroup network
@@ -188,6 +192,7 @@ AI_API_ENTRY
 ai_error ai_network_create_and_init(
   ai_handle* network, const ai_handle activations[], const ai_handle weights[]);
 
+
 /*!
  * @brief Get network inputs array pointer as a ai_buffer array pointer.
  * @ingroup network
@@ -199,6 +204,7 @@ AI_API_ENTRY
 ai_buffer* ai_network_inputs_get(
   ai_handle network, ai_u16 *n_buffer);
 
+
 /*!
  * @brief Get network outputs array pointer as a ai_buffer array pointer.
  * @ingroup network
@@ -209,6 +215,7 @@ ai_buffer* ai_network_inputs_get(
 AI_API_ENTRY
 ai_buffer* ai_network_outputs_get(
   ai_handle network, ai_u16 *n_buffer);
+
 
 /*!
  * @brief Run the network and return the output
@@ -229,6 +236,7 @@ ai_buffer* ai_network_outputs_get(
 AI_API_ENTRY
 ai_i32 ai_network_run(
   ai_handle network, const ai_buffer* input, ai_buffer* output);
+
 
 /*!
  * @brief Runs the network on the inputs.

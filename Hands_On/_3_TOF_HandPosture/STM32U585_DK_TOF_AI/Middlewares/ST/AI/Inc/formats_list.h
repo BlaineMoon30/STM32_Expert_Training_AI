@@ -14,9 +14,6 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
 
 /* FMT_ENTRY( exp_(0/1 only), name_, type_id_, 

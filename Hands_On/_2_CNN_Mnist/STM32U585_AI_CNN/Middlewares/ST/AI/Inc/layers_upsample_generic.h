@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file    layers_upsample_generic.h
-  * @author  Cyril Enault
+  * @author  STMicroelectronics
   * @brief   header file of AI platform padding generic datatypes
   ******************************************************************************
   * @attention
@@ -14,13 +14,9 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
-#ifndef LAYERS_UPSAMPLE_H
-#define LAYERS_UPSAMPLE_H
-#pragma once
+#ifndef LAYERS_UPSAMPLE_GENERIC_H
+#define LAYERS_UPSAMPLE_GENERIC_H
 
 #include "layers_generic.h"
 
@@ -37,7 +33,7 @@ AI_API_DECLARE_BEGIN
 /******************************************************************************/
 
 /*!
- * @brief Handles generic upsmapling in nearest mode
+ * @brief Handles generic upsampling in nearest mode
  * @ingroup layers_generic
  * @param layer upsample layer
  */
@@ -45,7 +41,7 @@ AI_INTERNAL_API
 void forward_upsample_nearest(ai_layer *pLayer);
 
 /*!
- * @brief Handles generic upsmapling in zeros mode
+ * @brief Handles generic upsampling in zeros mode
  * @ingroup layers_generic
  * @param layer upsample layer
  */
@@ -53,14 +49,13 @@ AI_INTERNAL_API
 void forward_upsample_zeros(ai_layer *pLayer);
 
 /*!
- * @brief Handles generic upsmapling in bilinear mode
+ * @brief Handles generic upsampling in bilinear mode
  * @ingroup layers_generic
  * @param layer upsample layer
  */
 AI_INTERNAL_API
 void forward_upsample_bilinear(ai_layer *pLayer);
 
-
 AI_API_DECLARE_END
 
-#endif    /*LAYERS_PAD_GENERIC_H*/
+#endif    /*LAYERS_UPSAMPLE_GENERIC_H*/

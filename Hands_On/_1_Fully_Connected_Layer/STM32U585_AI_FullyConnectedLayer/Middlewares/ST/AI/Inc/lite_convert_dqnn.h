@@ -14,13 +14,10 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
 #ifndef LITE_CONVERT_DQNN_H
 #define LITE_CONVERT_DQNN_H
-#pragma once
+
 
 #include "ai_lite_interface.h"
 
@@ -160,6 +157,15 @@ void forward_lite_node_convert_iu16of32(
   const ai_u32 size,
   const ai_float in_scale,
   const ai_u16 in_zeropoint);
+
+LITE_API_ENTRY
+void forward_lite_node_convert_integer_is8os8(
+  const ai_i8 *p_in,
+  ai_i8 *p_out,
+  const ai_i32 n_elems,
+  const ai_float scale_ratio,
+  const ai_i16 in_zp,
+  const ai_i16 out_zp);
 
 
 LITE_API_ENTRY

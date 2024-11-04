@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file    layers_sm.h
-  * @author  AST Embedded Analytics Research Platform
+  * @author  STMicroelectronics
   * @brief   header file of AI platform non softmax layer datatype
   ******************************************************************************
   * @attention
@@ -14,14 +14,10 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
 
 #ifndef LAYERS_SM_H
 #define LAYERS_SM_H
-#pragma once
 
 #include "layers_common.h"
 

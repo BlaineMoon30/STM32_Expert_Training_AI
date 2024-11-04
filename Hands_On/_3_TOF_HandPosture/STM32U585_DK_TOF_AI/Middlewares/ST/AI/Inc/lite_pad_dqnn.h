@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    lite_padding_dqnn.h
+  * @file    lite_pad_dqnn.h
   * @author  AIS
   * @brief   header file of AI platform lite padding kernel datatypes
   ******************************************************************************
@@ -14,16 +14,12 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
 #ifndef LITE_PADDING_DQNN_H
 #define LITE_PADDING_DQNN_H
-#pragma once
+
 
 #include "ai_lite_interface.h"
-
 
 /******************************************************************************/
 /*  Forward Functions Section                                                 */
@@ -31,10 +27,10 @@
 
 /*!
  * @brief Handles padding with binary input and binary output - Lite I/F
-  * @ingroup lite_padding_dqnn
+ * @ingroup lite_padding_dqnn
  */
 LITE_API_ENTRY
-void forward_lite_padding_is1os1(const ai_u32 *pDataIn_init, 
+void forward_lite_pad_is1os1(const ai_u32 *pDataIn_init,
                                  ai_u32 *pDataOut_init,
                                  const ai_i32 width_in,
                                  const ai_i32 width_out,

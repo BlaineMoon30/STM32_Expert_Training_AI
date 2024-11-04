@@ -14,14 +14,9 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
-
 #ifndef DATATYPES_NETWORK_H
 #define DATATYPES_NETWORK_H
-#pragma once
 
 /*
  * Header to be overriden by the generated version
@@ -55,4 +50,4 @@ typedef ai_u32 ai_array_size;
 
 AI_API_DECLARE_END
 
-#endif /*DATATYPES_NETWORK_H*/
+#endif /* DATATYPES_NETWORK_H */

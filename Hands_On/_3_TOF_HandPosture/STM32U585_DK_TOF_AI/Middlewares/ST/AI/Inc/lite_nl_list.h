@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file    lite_nl_list.h
-  * @author  AST Embedded Analytics Research Platform
+  * @author  STMicroelectronics
   * @brief   header file of lite supported non-linearities routines 
   ******************************************************************************
   * @attention
@@ -13,9 +13,6 @@
   * in the root directory of this software component.
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
-  ******************************************************************************
-  @verbatim
-  @endverbatim
   ******************************************************************************
   */
 
@@ -52,12 +49,14 @@ LITE_NL_ENTRY(26, swish, AI_MATH_SWISH, 1)
 LITE_NL_ENTRY(27, hard_swish, AI_MATH_HARD_SWISH, 1)
 LITE_NL_ENTRY(28, sign, AI_SIGN, 1)
 LITE_NL_ENTRY(29, sqrt, AI_MATH_SQRT, 1)
-LITE_NL_ENTRY(30, soft_plus, AI_MATH_SOFT_PLUS, 1)
-LITE_NL_ENTRY(31, soft_sign, AI_MATH_SOFT_SIGN, 1)
-LITE_NL_ENTRY(32, tanh, AI_MATH_TANH, 1)
-LITE_NL_ENTRY(33, prelu, /**/, 0)
-LITE_NL_ENTRY(34, relu, AI_MATH_RELU, 1)
-LITE_NL_ENTRY(35, relu_generic, /**/, 0)
+// LITE_NL_ENTRY(30, softmax, /**/, 0) // for future changes
+// LITE_NL_ENTRY(31, softmax_zero_channel, /**/, 0) // for future changes
+LITE_NL_ENTRY(32, soft_plus, AI_MATH_SOFT_PLUS, 1)
+LITE_NL_ENTRY(33, soft_sign, AI_MATH_SOFT_SIGN, 1)
+LITE_NL_ENTRY(34, tanh, AI_MATH_TANH, 1)
+LITE_NL_ENTRY(35, prelu, /**/, 0)
+LITE_NL_ENTRY(36, relu, AI_MATH_RELU, 1)
+LITE_NL_ENTRY(37, relu_generic, /**/, 0)
 
 LITE_NL_ENTRY(101, elu, AI_MATH_ELU, 2)
 LITE_NL_ENTRY(102, relu_thresholded, AI_MATH_RELU_THRESHOLDED, 2)
@@ -66,6 +65,7 @@ LITE_NL_ENTRY(102, relu_thresholded, AI_MATH_RELU_THRESHOLDED, 2)
 LITE_NL_ENTRY(201, clip, AI_CLAMP, 3)
 LITE_NL_ENTRY(202, hard_sigmoid, AI_MATH_HARD_SIGMOID, 3)
 LITE_NL_ENTRY(203, selu, AI_MATH_SELU, 3)
+LITE_NL_ENTRY(204, gelu, AI_MATH_GELU, 2)
 
 
 #undef LITE_NL_ENTRY

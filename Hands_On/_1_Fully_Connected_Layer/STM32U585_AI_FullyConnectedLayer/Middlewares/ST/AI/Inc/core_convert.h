@@ -14,14 +14,9 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
-
 #ifndef CORE_CONVERT_H
 #define CORE_CONVERT_H
-#pragma once
 
 #include "ai_platform.h"
 #include "ai_platform_interface.h"

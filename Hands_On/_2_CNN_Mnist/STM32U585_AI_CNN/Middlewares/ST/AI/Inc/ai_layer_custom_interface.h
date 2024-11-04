@@ -14,13 +14,9 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
 #ifndef AI_LAYER_CUSTOM_INTERFACE_H
 #define AI_LAYER_CUSTOM_INTERFACE_H
-#pragma once
 
 #include "ai_platform.h"
 #include "ai_platform_interface.h"

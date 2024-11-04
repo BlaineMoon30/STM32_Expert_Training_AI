@@ -14,14 +14,9 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
-
-#ifndef __CORE_NET_INSPECT_H_
-#define __CORE_NET_INSPECT_H_
-#pragma once
+#ifndef CORE_NET_INSPECT_H
+#define CORE_NET_INSPECT_H
 
 #include "core_net_inspect_interface.h"
 
@@ -94,4 +89,4 @@ ai_bool ai_network_inspect_destroy(ai_handle network);
 
 AI_API_DECLARE_END
 
-#endif    /*__CORE_NET_INSPECT_H_*/
+#endif    /* CORE_NET_INSPECT_H */

@@ -14,13 +14,10 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
 #ifndef LITE_PADDING_DQNN_H
 #define LITE_PADDING_DQNN_H
-#pragma once
+
 
 #include "ai_lite_interface.h"
 

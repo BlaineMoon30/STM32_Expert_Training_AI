@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file    layers_pad_generic.h
-  * @author  Marco Forleo
+  * @author  AIS
   * @brief   header file of AI platform padding generic datatypes
   ******************************************************************************
   * @attention
@@ -14,13 +14,9 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
 #ifndef LAYERS_PADDING_DQNN_H
 #define LAYERS_PADDING_DQNN_H
-#pragma once
 
 #include "layers_generic.h"
 

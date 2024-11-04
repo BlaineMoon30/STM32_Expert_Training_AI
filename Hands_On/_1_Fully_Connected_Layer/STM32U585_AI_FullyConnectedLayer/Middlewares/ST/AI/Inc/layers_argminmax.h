@@ -1,12 +1,13 @@
+
 /**
   ******************************************************************************
-  * @file    layers_padding_dqnn.h
+  * @file    layers_arminmax.h
   * @author  AIS
-  * @brief   header file of AI platform DQNN padding datatypes
+  * @brief   header file of AI platform generic layers datatypes
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -14,41 +15,35 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
-#ifndef LAYERS_PADDING_DQNN_H
-#define LAYERS_PADDING_DQNN_H
-#pragma once
+#ifndef LAYERS_ARGMINMAX_H
+#define LAYERS_ARGMINMAX_H
 
-#include "layers_common.h"
 #include "layers_generic.h"
 
-/*!
- * @defgroup layers_generic_dqnn Layers Definitions
- * @brief definition 
- *
- */
 
 AI_API_DECLARE_BEGIN
 
-
-
 /******************************************************************************/
-/*  Forward Functions Section                                                 */
+/* Forward Functions Section                                                  */
 /******************************************************************************/
-
 
 /*!
- * @brief Handles padding with binary input and binary output 
- * @ingroup layers_generic_dqnn
- * @param layer pad layer
+ * @brief Compute the indices of the max elements of the input tensor's element along the provided axis.
+ * @ingroup layers_generic
+ * @param layer argminmax layer
  */
 AI_INTERNAL_API
-void forward_padding_is1os1(ai_layer *pLayer);
+void forward_argmax_is8(ai_layer* layer);
 
+/*!
+ * @brief Compute the indices of the max elements of the input tensor's element along the provided axis.
+ * @ingroup layers_generic
+ * @param layer argminmax layer
+ */
+AI_INTERNAL_API
+void forward_argmin_is8(ai_layer* layer);
 
 AI_API_DECLARE_END
 
-#endif    /*LAYERS_PADDING_DQNN_H*/
+#endif    /*LAYERS_ARGMINMAX_H*/

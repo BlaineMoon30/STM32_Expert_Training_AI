@@ -22,7 +22,7 @@
 #define  __RTE_COMPONENTS_H__
 
 /* Defines ------------------------------------------------------------------*/
-/* STMicroelectronics.X-CUBE-AI.8.0.1 */
+/* STMicroelectronics.X-CUBE-AI.9.1.0 */
 #define AI_ApplicationTemplate
 
 #endif /* __RTE_COMPONENTS_H__ */

@@ -1,6 +1,23 @@
+/**
+  ******************************************************************************
+  * @file    lite_gru_f32.h
+  * @author  AIS
+  * @brief   header file of AI platform lite gru kernel datatypes
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2023 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
 #ifndef LITE_GRU_F32_H
 #define LITE_GRU_F32_H
-#pragma once
+
 
 #include "ai_lite_interface.h"
 
@@ -25,6 +42,7 @@
  * @param reset_after Whether to apply reset gate after (True) or before (False) matmul.
  * @param activation_param The parameters for activation_nl (can be NULL)
  * @param recurrent_param The parameters for recurrent_nl (can be NULL)
+ * @param initial_hidden Initial state of hidden layer (can be NULL)
  */
 LITE_API_ENTRY
 void forward_lite_gru_if32of32wf32(
@@ -33,7 +51,8 @@ void forward_lite_gru_if32of32wf32(
   const ai_u32 n_units, const ai_size n_timesteps, const ai_size n_features,
   ai_handle activation_nl, ai_handle recurrent_nl, ai_bool return_seq,
   ai_bool go_backwards, ai_bool reverse_seq, ai_bool reset_after,
-  const ai_float* activation_param, const ai_float* recurrent_param);
+  const ai_float* activation_param, const ai_float* recurrent_param,
+  const ai_float* initial_hidden);
 
 
 #endif    /* LITE_GRU_F32_H */

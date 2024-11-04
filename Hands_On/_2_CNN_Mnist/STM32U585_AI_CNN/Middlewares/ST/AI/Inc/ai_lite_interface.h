@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file    ai_lite_interface.h
-  * @author  AST Embedded Analytics Research Platform
+  * @author  STMicroelectronics
   * @brief   Definitions and implementations of runtime-lite codegen APIs
   ******************************************************************************
   * @attention
@@ -14,15 +14,13 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
 #ifndef AI_LITE_INTERFACE_H
 #define AI_LITE_INTERFACE_H
-#pragma once
-#include "ai_platform.h"
+
 #include "ai_lite.h"
+#include "core_assert.h"
+
 
 /*****************************************************************************/
 /* Generic Codegen Section */
@@ -46,15 +44,9 @@
 
 #endif      /* HAS_LOG */
 
-#ifdef HAS_AI_ASSERT
-#include <assert.h>
-#define LITE_ASSERT(_cond) \
-  { assert(_cond); }
-#else
-#define LITE_ASSERT(_cond) \
-  do { /* LITE_ASSERT() */ } while (0);
+#define LITE_ASSERT(expr) \
+  CORE_ASSERT(expr)
 
-#endif  /*HAS_AI_ASSERT*/
 
 /*****************************************************************************/
 #if defined(_MSC_VER)
@@ -82,9 +74,6 @@
 
 #define LITE_UNUSED(_elem) \
   ((void)(_elem));
-
-#define LITE_KERNEL_SECTION(_code_block) \
-{ LITE_PACK(_code_block) }
 
 
 /*****************************************************************************/
@@ -132,10 +121,5 @@
 #define LITE_LAYER_RELEASE(name_, cast_type_) \
   /* LITE_LAYER_RELEASE() */
 
-
-/*****************************************************************************/
-AI_API_DECLARE_BEGIN
-
-AI_API_DECLARE_END
 
 #endif    /* AI_LITE_INTERFACE_H */

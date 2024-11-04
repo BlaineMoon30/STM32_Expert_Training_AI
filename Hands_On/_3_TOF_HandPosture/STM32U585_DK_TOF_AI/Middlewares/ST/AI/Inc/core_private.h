@@ -14,17 +14,13 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
-  @verbatim
-  @endverbatim
-  ******************************************************************************
   */
-
 #ifndef CORE_PRIVATE_H
 #define CORE_PRIVATE_H
-#pragma once
 
-#include "ai_math_helpers.h"
+#include "ai_datatypes_format.h"
 #include "ai_datatypes_internal.h"
+#include "ai_math_helpers.h"
 
 #include "core_log.h"
 
@@ -172,7 +168,7 @@ do { \
     AI_BUFFER_FMT_GET_TYPE(AI_ARRAY_OBJ(t_->data)->format)
 
 #define AI_TENSOR_GET_FMT(t_) \
-    (AI_ARRAY_OBJ(t_->data)->format)
+    AI_FMT_OBJ(AI_ARRAY_OBJ(t_->data)->format)
 
 
 /*****************************************************************************/
@@ -189,7 +185,10 @@ do { \
 /** Network Arrays Handlers                                                 **/
 /*****************************************************************************/
 #define AI_ARRAY_OBJ_FMT(array_) \
-  AI_CAST(ai_array_format, AI_ARRAY_OBJ(array_)->format)
+  AI_FMT_OBJ(AI_ARRAY_OBJ(array_)->format)
+
+#define AI_ARRAY_OBJ_FMT_GET(array_) \
+  AI_FMT_GET(AI_FMT_OBJ(AI_ARRAY_OBJ(array_)->format))
 
 #define AI_ARRAY_OBJ_SIZE(array_) \
   (AI_ARRAY_OBJ(array_)->size)
